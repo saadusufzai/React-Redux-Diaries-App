@@ -1,5 +1,8 @@
 import { Server, Model, Factory, belongsTo, hasMany, Response } from "miragejs";
 
+import user from './routes/user';
+import * as diary from './routes/diary';
+
 export const handelError = (error: any, massage = "An error has occoured") => {
   return new Response(400, undefined, {
     data: {
@@ -36,7 +39,19 @@ export const setupServer = (env?: string): Server => {
         server.create('user');
     },
     routes():void{
-        this.urlPrefix = 'https://mydiaries.app'
+        this.urlPrefix = 'https://mydiaries.app';
+
+        this.get('/diaries/entries/:id', diary.getEntries);
+        this.get('/diaries/:id', diary.getDiaries);
+
+        this.post('/auth/login', user.login);
+        this.post('/auth/signup', user.signup);
+
+        this.post('/diaries/',diary.create);
+        this.post('/diaries/entries/:id', diary.addEntry);
+
+        this.put('/diaries/entry/:id', diary.updateEntry);
+        this.put('/diaries/:id', diary.updateDiary);
     }
   });
 };
