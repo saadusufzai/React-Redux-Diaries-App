@@ -4,6 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { setupServer } from './services/mirage/server';
+
+if(process.env.NODE_EN == 'development'){
+  setupServer();
+}
+
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
