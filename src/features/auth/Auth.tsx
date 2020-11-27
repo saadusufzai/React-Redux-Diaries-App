@@ -11,7 +11,7 @@ import { useAppDispatch } from "../store";
 const Auth: FC = () => {
   const { handleSubmit, register, errors } = useForm<User>();
 
-  const [isLogin, setisLoin] = useState(true);
+  const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -33,7 +33,51 @@ const Auth: FC = () => {
       .finally(() => setLoading(false));
   };
 
-  return <div></div>;
+  return (
+      <div className="auth">
+          <div className="card">
+              <form onSubmit={handleSubmit(submitForm)}>
+                  <div className="inputWrapper">
+                      <input ref={register} name='username' placeholder='Username' />
+                      {errors && errors.username && (
+                          <p className="error">{errors.username.message}</p>
+                      )}
+                  </div>
+                  <div className="inputWrapper">
+                      <input ref={register}
+                      name='password'
+                      type='password'
+                      placeholder='Password'
+                      />
+                      {errors && errors.password && (
+                          <p className="error">{errors.password.message}</p>
+                      )}
+                  </div>
+                  {!isLogin &&(
+                      <div className="inputWrapper">
+                          <input ref={register}
+                          name='email'
+                          placeholder='Email (optional)'
+                          type="email"/>
+                          {errors && errors.email && (
+                              <p className="error">{errors.email.message}</p>
+                          )}
+                      </div>
+                  )}
+                  <div className="inputWrapper">
+                      <button type="submit" disabled={loading} >
+                          {isLogin ? 'Login' : ' Create account '}
+                      </button>
+                  </div>
+                  <p onClick={()=> setIsLogin(!isLogin)}
+                    style= {{cursor:'pointer', opacity: 0.7}}
+                   >
+                       {isLogin? 'No Account ? Create one ': ' Already have an account?'}
+                   </p>
+              </form>
+          </div>
+      </div>
+  );
 };
 
 export default Auth;
