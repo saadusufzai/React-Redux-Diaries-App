@@ -5,7 +5,6 @@ const Home:FC = () => {
     return(
         <div>
             <p>Welcome User!</p>
-            
         </div>
     )
 }
